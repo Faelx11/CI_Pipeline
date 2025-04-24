@@ -1,29 +1,45 @@
+# Nome da pipeline de Integração Contínua (CI)
 name: CI Pipeline
- 
+
+# Define os gatilhos que iniciam essa pipeline
 on:
- push:
-   branches: [ "main" ]
- pull_request:
-   branches: [ "main" ]
- 
+  # Quando houver um push na branch "main"
+  push:
+    branches: [ "main" ]
+  # Quando houver um pull request direcionado para a branch "main"
+  pull_request:
+    branches: [ "main" ]
+
+# Define os jobs (tarefas) que a pipeline irá executar
 jobs:
- build-and-test:
-   runs-on: ubuntu-latest
- 
-   steps:
-   - name: Checkout código
-     uses: actions/checkout@v3
- 
-   - name: Setup Python
-     uses: actions/setup-python@v4
-     with:
-       python-version: '3.10'
- 
-   - name: Instalar dependências
-     run: |
-      python -m pip install --upgrade pip
-       pip install pytest
- 
-   - name: Rodar testes
-     run: |
-      pytest
+  # Nome do job
+  build-and-test:
+    # Ambiente onde o job será executado (máquina virtual Ubuntu)
+    runs-on: ubuntu-latest
+
+    # Etapas a serem executadas dentro do job
+    steps:
+      # Etapa para fazer checkout (clonar o repositório) do código
+      - name: Checkout código
+        uses: actions/checkout@v3
+
+      # Etapa para configurar a versão do Python
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          # Define a versão do Python a ser usada
+          python-version: '3.10'
+
+      # Etapa para instalar as dependências do projeto
+      - name: Instalar dependências
+        run: |
+          # Atualiza o instalador de pacotes pip
+          python -m pip install --upgrade pip
+          # Instala o pytest (framework de testes em Python)
+          pip install pytest
+
+      # Etapa para executar os testes com o pytest
+      - name: Rodar testes
+        run: |
+          # Comando que executa os testes
+          pytest
